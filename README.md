@@ -1,4 +1,4 @@
-# Github-Equality
+## Github-Equality
 
 ## What can I do?
 > You can use this repo to make your github followers = following. It means that you will follow only those people who are following you and you will unfollow people who are not following you. Not suggested to use for people who have big fan following. 
@@ -11,9 +11,15 @@
 5. It is slow because it highly depends on the gui but fast enough than the human. Will not work if your two factor authentication is on.
 
 ## Getting Started
+To use this repo run:
 ```
 git clone https://github.com/Aman9723/github-equality.git
 cd /github-equality
 npm i
 npm start
+```
+Create a .env file in the github-equality folder:
+```
+USER: <your github username as string>
+PASSWORD: <your github password as string>
 ```

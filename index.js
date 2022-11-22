@@ -52,6 +52,8 @@ const signinGithub = async () => {
     await page.type('#password', process.env.PASSWORD);
     await page.click('.btn');
 
+    await page.waitForTimeout(process.env.TIMEOUT);
+
     console.log('signedin');
     return page;
 };

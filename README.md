@@ -9,6 +9,7 @@
 3. Finally it is ready with the differences. 
 4. Now, it uses puppeteer for chrome automation and will visit the profiles of all user via signing into your account and will take reverse action on it (follow/unfollow). 
 5. It is slow because it highly depends on the gui but fast enough than the human. Will not work if your two factor authentication is on.
+6. You can play around with the code to make something cooler or deploy it for working 24x7.
 
 ## Getting Started
 To use this repo run:

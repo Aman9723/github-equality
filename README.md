@@ -14,7 +14,7 @@
 To use this repo run:
 ```
 git clone https://github.com/Aman9723/github-equality.git
-cd /github-equality
+cd .\github-equality\
 npm i
 npm start
 ```

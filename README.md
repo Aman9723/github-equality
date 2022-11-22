@@ -18,7 +18,7 @@ cd /github-equality
 npm i
 npm start
 ```
-Create a .env file in the github-equality folder:
+Create a `.env` file in the `github-equality` folder:
 ```
 USER: <your github username as string>
 PASSWORD: <your github password as string>

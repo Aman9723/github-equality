@@ -26,7 +26,7 @@ npm start
 
 Create a `.env` file in the `github-equality` folder before doing `npm start`:
 ```
-USER: <your github username as string>
-PASSWORD: <your github password as string>
-TIMEOUT: <in milliseconds (read point 6)>
+USER = <your github username as string>
+PASSWORD = <your github password as string>
+TIMEOUT = <in milliseconds (read point 6)>
 ```

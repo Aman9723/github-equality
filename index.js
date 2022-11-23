@@ -12,7 +12,7 @@ const reverseAction = async () => {
         console.log('Already equal');
         return;
     }
-    const page = await signinGithub();
+    const { page, browser } = await signinGithub();
 
     const clickBtn = async (url) => {
         //go to profile
@@ -21,6 +21,7 @@ const reverseAction = async () => {
         });
         // click the follow / unfollow button respectively
         await page.click('span.user-following-container:nth-child(3)');
+        return;
     };
 
     // iterate through all the links
@@ -32,6 +33,7 @@ const reverseAction = async () => {
         }
     }
 
+    await browser.close();
     console.log('Job done 😉');
 };
 
@@ -55,7 +57,7 @@ const signinGithub = async () => {
     await page.waitForTimeout(process.env.TIMEOUT);
 
     console.log('signedin');
-    return page;
+    return { page, browser };
 };
 
 reverseAction();

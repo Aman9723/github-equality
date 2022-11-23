@@ -4,6 +4,29 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+const signinGithub = async () => {
+    // configure browser
+    const browser = await puppeteer.launch({
+        headless: false,
+        defaultViewport: null,
+        args: ['--start-maximized'],
+    });
+    const page = await browser.newPage();
+    await page.goto('https://github.com/login', {
+        waitUntil: 'load',
+    });
+
+    // enter credential
+    await page.type('#login_field', process.env.USER);
+    await page.type('#password', process.env.PASSWORD);
+    await page.click('.btn');
+
+    await page.waitForTimeout(process.env.TIMEOUT);
+
+    console.log('signedin');
+    return { page, browser };
+};
+
 const reverseAction = async () => {
     const arr = await difference();
     console.log(arr);
@@ -37,27 +60,5 @@ const reverseAction = async () => {
     console.log('Job done 😉');
 };
 
-const signinGithub = async () => {
-    // configure browser
-    const browser = await puppeteer.launch({
-        headless: false,
-        defaultViewport: null,
-        args: ['--start-maximized'],
-    });
-    const page = await browser.newPage();
-    await page.goto('https://github.com/login', {
-        waitUntil: 'load',
-    });
-
-    // enter credential
-    await page.type('#login_field', process.env.USER);
-    await page.type('#password', process.env.PASSWORD);
-    await page.click('.btn');
-
-    await page.waitForTimeout(process.env.TIMEOUT);
-
-    console.log('signedin');
-    return { page, browser };
-};
 
 reverseAction();

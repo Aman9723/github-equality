@@ -43,7 +43,7 @@ const reverseAction = async () => {
             waitUntil: 'load',
         });
         // click the follow / unfollow button respectively
-        await page.click('span.user-following-container:nth-child(3)');
+        await page.click('span.user-following-container:nth-child(3) > form:nth-child(1) > input:nth-child(2)');
         return;
     };
 
@@ -56,9 +56,9 @@ const reverseAction = async () => {
         }
     }
 
+    await page.waitForTimeout(2000);
     await browser.close();
     console.log('Job done 😉');
 };
-
 
 reverseAction();

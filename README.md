@@ -1,10 +1,10 @@
-## Github-Equality
+## Github🟰Equality
 
-## What can I do?
+## 🤷‍♂️ What can I do?
 
 > You can use this repo to make your github followers = following. It means that you will follow only those people who are following you and you will unfollow people who are not following you. Not suggested to use for people who have big fan following. 
 
-## How it works?
+## ⚒️ How it works?
 
 1. It fetches all the data of followers and following from the github api. 
 2. Then it finds the difference between the two data sets. If a user is only present in one of the data set then it will take action on that. 
@@ -14,7 +14,7 @@
 6. If github asks for email verification or if your 2FA is on then you can add a timeout duration. You can enter verification code manually during this timeout and the rest of the process will continue.
 7. You can play around with the code to make something cooler or deploy it for working 24x7.
 
-## Getting Started
+## 🚀 Getting Started
 
 To use this repo run:
 ```

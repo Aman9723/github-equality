@@ -19,7 +19,7 @@ const difference = async () => {
         }
     }
 
-    return follow.concat(unfollow);
+    return { follow, unfollow };
 };
 
 export default difference;

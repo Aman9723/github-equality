@@ -7,7 +7,7 @@ const difference = async () => {
     let follow = [];
     for (let user in followers) {
         if (!following[user]) {
-            follow.push(followers[user]);
+            follow.push(user);
         }
     }
 
@@ -15,7 +15,7 @@ const difference = async () => {
     let unfollow = [];
     for (let user in following) {
         if (!followers[user]) {
-            unfollow.push(following[user]);
+            unfollow.push(user);
         }
     }
 

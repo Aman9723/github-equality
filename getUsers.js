@@ -1,26 +1,41 @@
 import axios from 'axios';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const getUsers = async () => {
-    // getting followers
-    let followers = await axios.get(
-        `https://api.github.com/users/${process.env.USER}/followers?per_page=10000`
-    );
-    followers = followers.data;
+    let followers = [],
+        following = [];
 
-    // getting following
-    let following = await axios.get(
-        `https://api.github.com/users/${process.env.USER}/following?per_page=10000`
-    );
-    following = following.data;
+    await gather('followers');
+    await gather('following');
 
-    // creating object with {login: html_url}
+    async function gather(type, page = 1) {
+        let res = await axios({
+            method: 'GET',
+            url: `https://api.github.com/user/${type}?per_page=100&page=${page}`,
+            headers: {
+                Authorization: `Bearer ${process.env.TOKEN}`,
+            },
+        });
+        res = res.data;
+
+        // putting data in respective array
+        if (type == 'followers') followers = [...followers, ...res];
+        else following = [...following, ...res];
+
+        // recursively call till every data is gathered
+        if (res.length == 0) return;
+        await gather(type, ++page);
+    }
+
+    // creating object with login
     const f1 = {},
         f2 = {};
     for (let user of followers) {
-        f1[user.login] = user.html_url;
+        f1[user.login] = 1;
     }
     for (let user of following) {
-        f2[user.login] = user.html_url;
+        f2[user.login] = 1;
     }
     return [f1, f2];
 };

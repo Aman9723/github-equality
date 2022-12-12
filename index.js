@@ -1,83 +1,42 @@
+import axios from 'axios';
 import difference from './difference.js';
-import puppeteer from 'puppeteer';
 import dotenv from 'dotenv';
-
 dotenv.config();
 
-const signinGithub = async () => {
-    // configure browser
-    const browser = await puppeteer.launch({
-        headless: false,
-        defaultViewport: null,
-        args: ['--start-maximized'],
-    });
-    const page = await browser.newPage();
-    await page.goto('https://github.com/login', {
-        waitUntil: 'load',
-    });
+const equality = async () => {
+    try {
+        const { follow, unfollow } = await difference();
 
-    // enter credential
-    await page.type('#login_field', process.env.USER);
-    await page.type('#password', process.env.PASSWORD);
-    await page.click('.btn');
+        // if already equal 
+        if (!follow.length && !unfollow.length) {
+            console.log('Already 🟰');
+            return;
+        }
+        console.log(follow, unfollow);
 
-    await page.waitForTimeout(process.env.TIMEOUT);
+        // iterate and act 
+        for (let username of follow) {
+            await action('PUT', username);
+        }
+        for (let username of unfollow) {
+            await action('DELETE', username);
+        }
 
-    console.log('signedin');
-    return { page, browser };
+        console.log('Job done 😎');
+
+        // follow / unfollow action
+        async function action(meth, username) {
+            await axios({
+                method: `${meth}`,
+                url: `https://api.github.com/user/following/${username}`,
+                headers: {
+                    Authorization: `Bearer ${process.env.TOKEN}`,
+                },
+            });
+        }
+    } catch (e) {
+        console.log(e.message);
+    }
 };
 
-const reverseAction = async () => {
-    const { follow, unfollow } = await difference();
-    console.log(follow, unfollow);
-
-    if (!follow.length && !unfollow.length) {
-        console.log('Already equal');
-        return;
-    }
-    const { page, browser } = await signinGithub();
-
-    const clickBtn = async (url, type) => {
-        //go to profile
-        await page.goto(url, {
-            waitUntil: 'load',
-        });
-
-        // click the follow / unfollow button respectively
-        if (type === 'follow') {
-            await page.click(
-                'span.user-following-container:nth-child(3) > form:nth-child(1) > input:nth-child(2)'
-            );
-        } else {
-            await page.click(
-                'span.user-following-container:nth-child(3) > form:nth-child(2) > input:nth-child(2)'
-            );
-        }
-    };
-
-    // iterate through all the links to follow
-    for (let url of follow) {
-        try {
-            await clickBtn(url, 'follow');
-        } catch (e) {
-            console.log(e.message);
-            continue;
-        }
-    }
-
-    // iterate through all the links to unfollow
-    for (let url of unfollow) {
-        try {
-            await clickBtn(url, 'unfollow');
-        } catch (e) {
-            console.log(e.message);
-            continue;
-        }
-    }
-
-    await page.waitForTimeout(2000);
-    await browser.close();
-    console.log('Job done 😉');
-};
-
-reverseAction();
+equality();

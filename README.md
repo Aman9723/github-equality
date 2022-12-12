@@ -15,7 +15,7 @@
 
 To use this repo follow below steps:
 
-`Go to your github settings > Developer settings > Personal access tokens > token(classic) > Generate new token > name the token > check(✔️) user:follow scope > Generate token > copy the token`
+`Go to your github settings > Developer settings > Personal access tokens > token(classic) > Generate new token > name the token > Set expiry > check(✔️) user:follow scope > Generate token > copy the token`
 
 Create a `.env` file and put `TOKEN = <generated token>` as string  after git clone.
 
